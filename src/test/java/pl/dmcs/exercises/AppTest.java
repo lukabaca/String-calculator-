@@ -11,6 +11,8 @@ public class AppTest {
         testSumResult("", 0);
         testSumResult("1", 1);
         testSumResult("1, 2", 3);
+        testSumResult("1,2,3,4,5", 15);
+        testSumResult("//;\n2; 3", 5);
     }
 
     private void testSumResult(String str, int expectedSum) {
