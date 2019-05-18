@@ -9,6 +9,8 @@ public class AppTest {
     @Test
     public void test() {
         testSumResult("", 0);
+        testSumResult("1", 1);
+        testSumResult("1, 2", 3);
     }
 
     private void testSumResult(String str, int expectedSum) {
