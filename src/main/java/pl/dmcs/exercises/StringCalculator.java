@@ -1,7 +1,10 @@
 package pl.dmcs.exercises;
 
 import pl.dmcs.exercises.exception.InvalidStringException;
+import pl.dmcs.exercises.exception.NegativeNumberNotAllowedException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,8 +21,19 @@ public class StringCalculator {
         }
         String separator = getDelimiterConfigurationFromString(str);
         String [] elements = transformStringIntoElements(str, separator);
+        boolean hasNegativeNumbers = false;
+        List<Integer> negativeNumbers = new ArrayList<Integer>();
         for(String element: elements) {
-            sum += getNumberFromString(element);
+            int number = getNumberFromString(element);
+            if (number >= 0 && !hasNegativeNumbers) {
+                sum += number;
+            } else if (number < 0) {
+                hasNegativeNumbers = true;
+                negativeNumbers.add(number);
+            }
+        }
+        if (hasNegativeNumbers) {
+            throw new NegativeNumberNotAllowedException("Negatives not allowed", negativeNumbers);
         }
         return sum;
     }

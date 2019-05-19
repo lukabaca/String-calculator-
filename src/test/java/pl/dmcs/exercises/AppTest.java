@@ -2,6 +2,7 @@ package pl.dmcs.exercises;
 
 import org.junit.jupiter.api.Test;
 import pl.dmcs.exercises.exception.InvalidStringException;
+import pl.dmcs.exercises.exception.NegativeNumberNotAllowedException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,6 +21,7 @@ public class AppTest {
         testSumResult( "1\n2,3", 6);
         testSumResult( "1\n2, 3\n5", 11);
         testSumResult("//@\n 2@ 3", 5);
+//        testSumResult("-1, 5, 5, -2", 7);
     }
 
     @Test
@@ -30,13 +32,24 @@ public class AppTest {
         testSumResultThrowInvalidStringException( "1,\n2", 3);
     }
 
+    @Test
+    public void testNegativeNumbers() {
+        testNegativeNumberInSequence("-1");
+        testNegativeNumberInSequence("-1, 5, 5, -2");
+    }
+
+    private void testNegativeNumberInSequence(String str) {
+        StringCalculator stringCalculator = new StringCalculator();
+        assertThrows(NegativeNumberNotAllowedException.class, () -> stringCalculator.add(str));
+    }
+
     private void testSumResult(String str, int expectedSum) {
         StringCalculator stringCalculator = new StringCalculator();
         int sum = stringCalculator.add(str);
         assertEquals(expectedSum, sum);
     }
 
-    private void testSumResultThrowInvalidStringException(String str, int expectedSum) {
+    private void testSumResultThrowInvalidStringException(String str, int sum) {
         StringCalculator stringCalculator = new StringCalculator();
         assertThrows(InvalidStringException.class, () -> stringCalculator.add(str));
     }
