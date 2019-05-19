@@ -19,8 +19,13 @@ public class StringCalculator {
         if (str == null || str.equals("")) {
             return sum;
         }
-        String separator = getDelimiterConfigurationFromString(str);
+        String separator = getSeparator(str);
         String [] elements = transformStringIntoElements(str, separator);
+        return getSum(elements);
+    }
+
+    private int getSum(String [] elements) {
+        int sum = 0;
         boolean hasNegativeNumbers = false;
         List<Integer> negativeNumbers = new ArrayList<Integer>();
         for(String element: elements) {
@@ -58,7 +63,7 @@ public class StringCalculator {
         return str.split(separator + "|" + "\n");
     }
 
-    private String getDelimiterConfigurationFromString(String str) {
+    private String getSeparator(String str) {
         if (isStringBeginningMatching(str)) {
             return str.substring(DELIMITER_POSITION, DELIMITER_POSITION + 1);
         }

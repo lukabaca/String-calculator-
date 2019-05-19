@@ -21,7 +21,6 @@ public class AppTest {
         testSumResult( "1\n2,3", 6);
         testSumResult( "1\n2, 3\n5", 11);
         testSumResult("//@\n 2@ 3", 5);
-//        testSumResult("-1, 5, 5, -2", 7);
     }
 
     @Test
@@ -34,11 +33,11 @@ public class AppTest {
 
     @Test
     public void testNegativeNumbers() {
-        testNegativeNumberInSequence("-1");
-        testNegativeNumberInSequence("-1, 5, 5, -2");
+        testNegativeNumbersInSequence("-1");
+        testNegativeNumbersInSequence("-1, 5, 5, -2");
     }
 
-    private void testNegativeNumberInSequence(String str) {
+    private void testNegativeNumbersInSequence(String str) {
         StringCalculator stringCalculator = new StringCalculator();
         assertThrows(NegativeNumberNotAllowedException.class, () -> stringCalculator.add(str));
     }
