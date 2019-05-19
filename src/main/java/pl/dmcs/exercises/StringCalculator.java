@@ -9,6 +9,7 @@ public class StringCalculator {
 
     private final int DELIMITER_POSITION = 2;
     private final int NUMBERS_SEQUENCE_START_POSITION = 4;
+    private final String DEFAULT_DELIMITER = ",";
 
     int add(String str) {
         int sum = 0;
@@ -29,7 +30,7 @@ public class StringCalculator {
         }
         catch (NumberFormatException e)
         {
-            return 0;
+            throw new InvalidStringException("Number was not provided");
         }
     }
 
@@ -37,32 +38,20 @@ public class StringCalculator {
         if (str == null || separator == null) {
             return new String[0];
         }
-        if (isStringBegginingMatching(str)) {
+        if (isStringBeginningMatching(str)) {
             str = str.substring(NUMBERS_SEQUENCE_START_POSITION);
         }
-        return str.split(separator);
+        return str.split(separator + "|" + "\n");
     }
-
-//    private int getSumFromStringElement(String str) {
-//        int sum = 0;
-//        for (int i = 0; i < str.length(); i++) {
-//            Character character = str.charAt(i);
-//            if (i % 2 == 1 && character.toString().equals("\n")) {
-//
-//            } else {
-//
-//            }
-//        }
-//    }
 
     private String getDelimiterConfigurationFromString(String str) {
-        if (isStringBegginingMatching(str)) {
+        if (isStringBeginningMatching(str)) {
             return str.substring(DELIMITER_POSITION, DELIMITER_POSITION + 1);
         }
-        return ",";
+        return DEFAULT_DELIMITER;
     }
 
-    private boolean isStringBegginingMatching(String str) {
+    private boolean isStringBeginningMatching(String str) {
         Pattern p = Pattern.compile("^(//[^0-9]\n)");
         Matcher matcher = p.matcher(str);
         return matcher.find();
