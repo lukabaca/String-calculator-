@@ -7,10 +7,11 @@ import pl.dmcs.exercises.exception.NegativeNumberNotAllowedException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AppTest {
+class AppTest {
 
     @Test
-    public void testSum() {
+     void testSum() {
+        testSumResult(null, 0);
         testSumResult("", 0);
         testSumResult("1", 1);
         testSumResult("1, 2", 3);
@@ -24,22 +25,23 @@ public class AppTest {
     }
 
     @Test
-    public void testInvalidStringException() {
-        testSumResultThrowInvalidStringException("s1", 1);
-        testSumResultThrowInvalidStringException("15, 2#", 3);
-        testSumResultThrowInvalidStringException( "1,\n2", 3);
-        testSumResultThrowInvalidStringException( "1,\n2", 3);
+    void testInvalidStringException() {
+        testSumResultThrowInvalidStringException("s1");
+        testSumResultThrowInvalidStringException("15, 2#");
+        testSumResultThrowInvalidStringException( "1,\n2");
+        testSumResultThrowInvalidStringException( "1,\n2");
     }
 
     @Test
-    public void testNegativeNumbers() {
-        testNegativeNumbersInSequence("-1");
-        testNegativeNumbersInSequence("-1, 5, 5, -2");
+    void testNegativeNumbers() {
+        testNegativeNumbersInSequence("-1", "Negatives not allowed [-1]");
+        testNegativeNumbersInSequence("-1, 5, 5, -2", "Negatives not allowed [-1, -2]");
     }
 
-    private void testNegativeNumbersInSequence(String str) {
+    private void testNegativeNumbersInSequence(String str, String expectedExceptionMessage) {
         StringCalculator stringCalculator = new StringCalculator();
-        assertThrows(NegativeNumberNotAllowedException.class, () -> stringCalculator.add(str));
+        Exception exception = assertThrows(NegativeNumberNotAllowedException.class, () -> stringCalculator.add(str));
+        assertEquals(expectedExceptionMessage, exception.getMessage());
     }
 
     private void testSumResult(String str, int expectedSum) {
@@ -48,7 +50,7 @@ public class AppTest {
         assertEquals(expectedSum, sum);
     }
 
-    private void testSumResultThrowInvalidStringException(String str, int sum) {
+    private void testSumResultThrowInvalidStringException(String str) {
         StringCalculator stringCalculator = new StringCalculator();
         assertThrows(InvalidStringException.class, () -> stringCalculator.add(str));
     }

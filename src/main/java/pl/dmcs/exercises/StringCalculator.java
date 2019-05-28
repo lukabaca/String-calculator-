@@ -38,7 +38,7 @@ public class StringCalculator {
             }
         }
         if (hasNegativeNumbers) {
-            throw new NegativeNumberNotAllowedException("Negatives not allowed", negativeNumbers);
+            throw new NegativeNumberNotAllowedException("Negatives not allowed ", negativeNumbers);
         }
         return sum;
     }
